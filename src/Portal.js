@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "./supabaseClient";
 import "./portal.css";
-
-export default function Portal() {
+import { useNavigate } from "react-router-dom";
+export default function Portal({setIsLoggedIn}) {
   const [name, setName] = useState("");
   const [salary, setSalary] = useState("");
   const [advanceName, setAdvanceName] = useState("");
@@ -18,6 +18,12 @@ export default function Portal() {
     setToast({ message, type });
     setTimeout(() => setToast({ message: "", type: "" }), 3000);
   };
+  const navigate = useNavigate();
+
+const handleLogout = () => {
+  setIsLoggedIn(false);
+  navigate("/", { replace: true }); 
+};
 
   const fetchRecords = async () => {
     setLoading(true);
@@ -174,7 +180,7 @@ export default function Portal() {
       <h1>Employee Management Portal</h1>
 <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "10px" }}>
   <button 
-    onClick={() => window.location.href = "/"} 
+    onClick={handleLogout} 
     style={{ backgroundColor: "#e74c3c", color: "white", padding: "2px 3px", borderRadius: "6px", border: "none", cursor: "pointer" , width:"20%"}}
   >
     Logout

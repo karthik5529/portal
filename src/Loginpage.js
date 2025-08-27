@@ -1,28 +1,25 @@
 import React, { useState } from "react";
-import Portal from "./Portal";
+import { useNavigate } from "react-router-dom";
 
-const Loginpage = () => {
+const Loginpage = ({ setIsLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     if (username === "adminhemz" && password === "admin@123") {
-      setLoggedIn(true);
+      setIsLoggedIn(true);
+      navigate("/portal"); // Redirect to Portal page
     } else {
       setErrorMsg("Invalid username or password");
       setTimeout(() => setErrorMsg(""), 3000);
     }
   };
 
-  if (loggedIn) {
-    return <Portal />;
-  }
-
   return (
     <>
-      <style>{`
+     <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body, html { height: 100%; }
         .login-container {
@@ -92,6 +89,7 @@ const Loginpage = () => {
           .login-box h2 { font-size: 20px; }
         }
       `}</style>
+
 
       <div className="login-container">
         <div className="login-box">
